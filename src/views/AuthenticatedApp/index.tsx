@@ -1,14 +1,13 @@
-import AddChallenge from "components/AddChallenge";
-import useChallenges from "lib/hooks/useChallenges";
-import Challenges from "components/Challenges";
+import { useRoutes } from "hookrouter";
+
+import Challenge from "./challenge";
+import Home from "./home";
+
+const routes = {
+  "/": () => <Home />,
+  "/challenge/:id": ({ id }: any) => <Challenge id={id} />,
+};
 
 export default function AuthenticatedAppView() {
-  const { addChallenge, challenges } = useChallenges();
-
-  return (
-    <div>
-      <AddChallenge onSubmit={addChallenge} />
-      <Challenges challenges={challenges} />
-    </div>
-  );
+  return useRoutes(routes);
 }

@@ -1,13 +1,10 @@
 import AddRecord from "components/AddRecord";
 import Records from "components/Records";
 import useChallenge from "lib/hooks/useChallenge";
-import { Record } from "types";
+import type { Record } from "types";
 
-interface ChallengeItemProps {
-  challengeId: string;
-}
-export default function ChallengeItem({ challengeId }: ChallengeItemProps) {
-  const { challenge, loading, error, addRecord } = useChallenge(challengeId);
+export default function Challenge({ id }: { id: string }) {
+  const { challenge, loading, error, addRecord } = useChallenge(id);
 
   if (error) return <div>Error</div>;
   if (loading) return <div>Loading...</div>;
@@ -18,13 +15,13 @@ export default function ChallengeItem({ challengeId }: ChallengeItemProps) {
     0
   );
   return (
-    <div>
+    <main>
       <h2>{challenge.name}</h2>
       <div>
         Target: {currentTotal} / {challenge.target} {challenge.units}
       </div>
       <AddRecord onSubmit={addRecord} />
       <Records records={challenge.records || []} />
-    </div>
+    </main>
   );
 }
