@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { Challenge, ChallengeUnits } from "types";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  SimpleGrid,
+  Button,
+} from "@chakra-ui/react";
+
+import TargetInput from "./targetInput";
+import type { Challenge, ChallengeUnits } from "types";
 
 const blankForm = {
   name: "",
-  target: 0,
+  target: undefined,
   units: undefined,
 };
 interface AddChallengeProps {
@@ -27,50 +37,59 @@ export default function AddChallenge({ onSubmit }: AddChallengeProps) {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        required
-        value={newChallenge?.name}
-        placeholder="Challenge name"
-        onChange={(e) =>
-          setNewChallenge((cur) => {
-            const field = { name: e.target.value };
-            return cur ? { ...cur, ...field } : field;
-          })
-        }
-      />
-      <input
-        required
-        value={newChallenge?.target}
-        placeholder="Challenge target"
-        onChange={(e) =>
-          setNewChallenge((cur) => {
-            const field = { target: parseInt(e.target.value) || 1000 };
-            return cur ? { ...cur, ...field } : field;
-          })
-        }
-      />
-
-      <select
-        required
-        value={newChallenge?.units}
-        placeholder="Target units"
-        onChange={(e) =>
-          setNewChallenge((cur) => {
-            const field = { units: e.target.value as ChallengeUnits };
-            return cur ? { ...cur, ...field } : field;
-          })
-        }
-      >
-        <option value="">Select units</option>
-        <option value="reps">Reps</option>
-        <option value="minutes">Minutes</option>
-        <option value="meters">Meters</option>
-      </select>
-
-      <button type="submit" disabled={!isValidChallenge}>
-        Add Challenge
-      </button>
-      {/* <pre>{JSON.stringify(newChallenge, null, 2)}</pre> */}
+      <SimpleGrid gap={4}>
+        <FormControl id="name" isRequired>
+          <FormLabel>Name</FormLabel>
+          <Input
+            required
+            value={newChallenge?.name}
+            placeholder="Challenge name"
+            onChange={(e) =>
+              setNewChallenge((cur) => {
+                const field = { name: e.target.value };
+                return cur ? { ...cur, ...field } : field;
+              })
+            }
+          />
+        </FormControl>
+        <FormControl id="target" isRequired>
+          <FormLabel>Target</FormLabel>
+          <TargetInput
+            value={newChallenge?.target}
+            onChange={(newTarget) =>
+              setNewChallenge((cur) => {
+                const field = { target: newTarget };
+                if (cur) return { ...cur, ...field };
+                return field;
+              })
+            }
+          />
+        </FormControl>
+        <FormControl id="units" isRequired>
+          <FormLabel>Units</FormLabel>
+          <Select
+            required
+            value={newChallenge?.units}
+            placeholder="Target units"
+            onChange={(e) =>
+              setNewChallenge((cur) => {
+                const newChallenge = e.target.value as ChallengeUnits;
+                const unitsField = { units: newChallenge };
+                if (cur) return { ...cur, ...unitsField };
+                return unitsField;
+              })
+            }
+          >
+            <option value="reps">Reps</option>
+            <option value="minutes">Minutes</option>
+            <option value="meters">Meters</option>
+          </Select>
+        </FormControl>
+        <Button type="submit" disabled={!isValidChallenge}>
+          Add Challenge
+        </Button>
+        {/* <pre>{JSON.stringify(newChallenge, null, 2)}</pre> */}
+      </SimpleGrid>
     </form>
   );
 }

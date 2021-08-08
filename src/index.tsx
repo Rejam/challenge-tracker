@@ -5,17 +5,17 @@ import {
   extendTheme,
   ColorModeScript,
   withDefaultColorScheme,
+  theme as ChakraTheme,
 } from "@chakra-ui/react";
 
 import "lib/firebase";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-const theme = extendTheme(
-  withDefaultColorScheme({
-    colorScheme: "pink",
-  })
-);
+const theme = extendTheme(withDefaultColorScheme({ colorScheme: "blue" }), {
+  config: { useSystemColorMode: true },
+  base: ChakraTheme.colors.pink,
+});
 
 ReactDOM.render(
   <React.StrictMode>

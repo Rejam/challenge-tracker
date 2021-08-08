@@ -7,8 +7,8 @@ interface LoginViewProps {
 }
 export default function LoginView({ signupMethods }: LoginViewProps) {
   return (
-    <Container mt={[8, 16, 32]} p={8} shadow="md">
-      <SimpleGrid gap={4}>
+    <Container>
+      <SimpleGrid gap={4} mt={[8]} p={[8]} shadow="md">
         <Heading as="h1">Challenge Tracker</Heading>
         <Text>Sign in with:</Text>
         {signupMethods.map((signup) => (
