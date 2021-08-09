@@ -13,25 +13,23 @@ export default function Home() {
         <Flex justifyContent="flex-end">
           <AddChallenge addChallenge={addChallenge} />
         </Flex>
-        <Box p={[4, null, 8]}>
-          <SimpleGrid
-            gap={[4, null, 8]}
-            gridTemplateColumns={[
-              "repeat(auto-fit, minmax(280px, 1fr))",
-              null,
-              "repeat(auto-fit, minmax(320px, 1fr))",
-              "repeat(auto-fit, minmax(400px, 1fr))",
-              "repeat(auto-fit, minmax(450px, 1fr))",
-            ]}
-          >
-            {challenges &&
-              challenges.map((challenge) => (
-                <GridItem key={challenge.id} style={{ display: "flex" }}>
-                  <ChallengeCard challenge={challenge} />
-                </GridItem>
-              ))}
-          </SimpleGrid>
-        </Box>
+        <SimpleGrid
+          gap={[4, null, 8]}
+          gridTemplateColumns={[
+            "repeat(auto-fit, minmax(280px, 1fr))",
+            null,
+            "repeat(auto-fit, minmax(320px, 1fr))",
+            "repeat(auto-fit, minmax(400px, 1fr))",
+            "repeat(auto-fit, minmax(450px, 1fr))",
+          ]}
+        >
+          {challenges &&
+            challenges.map((challenge) => (
+              <GridItem key={challenge.id} style={{ display: "flex" }}>
+                <ChallengeCard challenge={challenge} />
+              </GridItem>
+            ))}
+        </SimpleGrid>
       </SimpleGrid>
     </Box>
   );

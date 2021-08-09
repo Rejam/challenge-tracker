@@ -17,11 +17,16 @@ import {
   ModalCloseButton,
   useDisclosure,
   Grid,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 
 import AddRecord from "components/AddRecord";
 import useChallenge from "lib/hooks/useChallenge";
-import type { Record } from "types";
+import type { ChallengeUnits, Record } from "types";
 import RecordItem from "components/RecordItem";
 
 const getTotal = (total: number, record: Record) => (total += record.value);
@@ -58,11 +63,7 @@ export default function Challenge() {
       <Heading as="h2">{challenge.name}</Heading>
       <SimpleGrid mt={8} gap={[4, null, 8]}>
         <Box maxW={600} mx="auto">
-          <SimpleGrid
-            gap={[4, null, 8]}
-            columns={[1, null, 2]}
-            placeItems="center"
-          >
+          <SimpleGrid gap={[4]} columns={[1, null, 2]} placeItems="center">
             <CircularProgress
               size="120px"
               thickness="15px"
@@ -79,23 +80,11 @@ export default function Challenge() {
         <Box w="100%" maxW={600} mx="auto">
           <AddRecord onSubmit={addRecord} />
         </Box>
-        <Grid gap={[4, null, 8]}>
-          {recordsByDate.map(([key, groupedRecords]) => {
-            return (
-              <div>
-                <h5>{key}</h5>
-                {groupedRecords.map((record: Record) => (
-                  <RecordItem
-                    key={record.id}
-                    record={record}
-                    unit={challenge.units}
-                    deleteRecord={deleteRecord(record.id)}
-                  />
-                ))}
-              </div>
-            );
-          })}
-        </Grid>
+        <RecordsAccordion
+          records={recordsByDate}
+          unit={challenge.units}
+          deleteRecord={deleteRecord}
+        />
       </SimpleGrid>
 
       <DeleteChallengeModal onDelete={deleteChallenge} />
@@ -137,5 +126,49 @@ function DeleteChallengeModal({
         </ModalContent>
       </Modal>
     </>
+  );
+}
+
+function RecordsAccordion({
+  records,
+  unit,
+  deleteRecord,
+}: {
+  records: [string, Record[]][];
+  unit: ChallengeUnits;
+  deleteRecord: any;
+}) {
+  const headerBg = useColorModeValue("base.50", "base.800");
+
+  return (
+    <Accordion allowMultiple colorScheme="red">
+      {records.map(([key, groupedRecords]) => {
+        return (
+          <AccordionItem key={key}>
+            <AccordionButton
+              // as="h4"
+              // p={2}
+              // fontSize="lg"
+              bg={headerBg}
+            >
+              <Text flex={1} textAlign="start" textTransform="uppercase">
+                {key}
+              </Text>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              {groupedRecords.map((record: Record) => (
+                <RecordItem
+                  key={record.id}
+                  record={record}
+                  unit={unit}
+                  deleteRecord={deleteRecord(record.id)}
+                />
+              ))}
+            </AccordionPanel>
+          </AccordionItem>
+        );
+      })}
+    </Accordion>
   );
 }

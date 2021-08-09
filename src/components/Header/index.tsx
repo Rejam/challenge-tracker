@@ -19,11 +19,13 @@ export default function Header() {
           Challenge Tracker
         </ChakraLink>
         <HStack>
+          {auth.user && (
+            <Button borderRadius={0} onClick={auth.signOut}>
+              Sign out
+            </Button>
+          )}
           <Button borderRadius={0} onClick={toggleColorMode}>
             Toggle {colorMode === "light" ? "🌙" : "🌞"}
-          </Button>
-          <Button borderRadius={0} onClick={auth.signOut}>
-            Sign out
           </Button>
         </HStack>
       </HStack>
