@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  SimpleGrid,
-  Button,
-  Grid,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Button, Grid } from "@chakra-ui/react";
 
 import type { Record } from "types";
 
