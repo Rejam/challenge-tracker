@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 import { firestore } from "lib/firebase";
@@ -11,14 +12,11 @@ export default function useChallenges() {
   });
 
   const addChallenge = async (newChallenge: Challenge) => {
-    return challengesRef
-      .add({
-        ...newChallenge,
-        createdAt: new Date().toISOString(),
-      })
-      .then((response) => {
-        return response.id;
-      });
+    return challengesRef.add({
+      ...newChallenge,
+      createdAt: new Date().toISOString(),
+      id: uuidv4(),
+    });
   };
 
   const challenges = (result || []) as unknown as Challenge[];
