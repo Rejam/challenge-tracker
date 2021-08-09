@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { AnimateSharedLayout } from "framer-motion";
 import {
   ChakraProvider,
   extendTheme,
@@ -26,7 +27,9 @@ ReactDOM.render(
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <App />
+        <AnimateSharedLayout>
+          <App />
+        </AnimateSharedLayout>
       </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>,

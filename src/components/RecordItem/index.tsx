@@ -25,7 +25,7 @@ export default function RecordItem({
   deleteRecord,
   unit,
 }: RecordItemProps) {
-  const hoverBG = useColorModeValue("base.50", "base.800");
+  const hoverBG = useColorModeValue("gray.100", "gray.800");
   return (
     <Flex
       justifyContent="space-between"

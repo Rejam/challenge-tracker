@@ -7,8 +7,8 @@ import useAuth from "lib/hooks/useAuth";
 
 export default function App() {
   const bg = useColorModeValue(
-    "rgba(255, 255, 255, 0.8)",
-    "rgba(0, 0, 0, 0.7)"
+    "rgba(255, 255, 255, 0.95)",
+    "rgba(0, 0, 0, 0.85)"
   );
   return (
     <Box bgGradient="linear( base.500, accent.500)" minH="100vh">

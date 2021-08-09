@@ -19,7 +19,7 @@ interface ChallengeCardProps {
 }
 
 export default function ChallengeCard({ challenge }: ChallengeCardProps) {
-  const bg = useColorModeValue("white", "base.900");
+  const bg = useColorModeValue("gray.50", "gray.900");
   const { addRecord } = useChallenge(challenge.id);
   const records = challenge.records || [];
   const currentTotal = records.reduce(
@@ -33,9 +33,13 @@ export default function ChallengeCard({ challenge }: ChallengeCardProps) {
   return (
     <Box bg={bg} shadow="md" p={[4, null, 8]} w="100%">
       <SimpleGrid gap={[4]}>
-        <ChakraLink as={Link} to={linkUrl}>
-          <Heading as="h3">{challenge.name}</Heading>
-        </ChakraLink>
+        <Box>
+          <ChakraLink as={Link} to={linkUrl}>
+            <Heading as="h3" display="inline-block">
+              {challenge.name}
+            </Heading>
+          </ChakraLink>
+        </Box>
 
         <Text>
           Target: {currentTotal} / {challenge.target} {challenge.units}

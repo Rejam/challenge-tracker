@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import {
   Box,
-  Button,
   CircularProgress,
   CircularProgressLabel,
   Heading,
@@ -9,25 +8,13 @@ import {
   Spinner,
   Text,
   useColorModeValue,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
-  useDisclosure,
-  Grid,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
 } from "@chakra-ui/react";
 
 import AddRecord from "components/AddRecord";
 import useChallenge from "lib/hooks/useChallenge";
-import type { ChallengeUnits, Record } from "types";
-import RecordItem from "components/RecordItem";
+import DeleteChallengeModal from "components/DeleteChallengeModal";
+import RecordsAccordion from "components/RecordsAccordion";
+import type { Record } from "types";
 
 const getTotal = (total: number, record: Record) => (total += record.value);
 
@@ -41,7 +28,7 @@ export default function Challenge() {
     deleteRecord,
     deleteChallenge,
   } = useChallenge(id);
-  const bg = useColorModeValue("white", "base.900");
+  const bg = useColorModeValue("gray.50", "gray.900");
 
   if (error) return <div>Error</div>;
   if (loading) return <Spinner />;
@@ -50,12 +37,13 @@ export default function Challenge() {
   const records: Record[] = challenge.records || [];
   const currentTotal = records.reduce(getTotal, 0);
   const progressPercent = Math.round((currentTotal / challenge.target) * 100);
-  const recordsByDate = Object.entries(
-    records.reduce((grouped: { [key: string]: Record[] }, record: Record) => {
+  const recordsByDate = records.reduce(
+    (grouped: { [key: string]: Record[] }, record: Record) => {
       const key = record.date;
       if (grouped[key]) return { ...grouped, [key]: [record, ...grouped[key]] };
       return { ...grouped, [key]: [record] };
-    }, {})
+    },
+    {}
   );
 
   return (
@@ -89,86 +77,5 @@ export default function Challenge() {
 
       <DeleteChallengeModal onDelete={deleteChallenge} />
     </Box>
-  );
-}
-
-function DeleteChallengeModal({
-  onDelete,
-}: {
-  onDelete: () => Promise<void | null>;
-}) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <>
-      <Box
-        mt={8}
-        border="2px solid"
-        borderColor="red"
-        borderRadius={8}
-        p={[4, null, 8]}
-        textAlign="center"
-      >
-        <Button w="fit-content" colorScheme="red" onClick={onOpen}>
-          Delete Challenge
-        </Button>
-      </Box>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent py={4}>
-          <ModalCloseButton />
-          <ModalHeader>Delete Challenge</ModalHeader>
-          <ModalBody>
-            <Button colorScheme="red" onClick={() => onDelete().then(onClose)}>
-              Confirm
-            </Button>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-}
-
-function RecordsAccordion({
-  records,
-  unit,
-  deleteRecord,
-}: {
-  records: [string, Record[]][];
-  unit: ChallengeUnits;
-  deleteRecord: any;
-}) {
-  const headerBg = useColorModeValue("base.50", "base.800");
-
-  return (
-    <Accordion allowMultiple colorScheme="red">
-      {records.map(([key, groupedRecords]) => {
-        return (
-          <AccordionItem key={key}>
-            <AccordionButton
-              // as="h4"
-              // p={2}
-              // fontSize="lg"
-              bg={headerBg}
-            >
-              <Text flex={1} textAlign="start" textTransform="uppercase">
-                {key}
-              </Text>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel>
-              {groupedRecords.map((record: Record) => (
-                <RecordItem
-                  key={record.id}
-                  record={record}
-                  unit={unit}
-                  deleteRecord={deleteRecord(record.id)}
-                />
-              ))}
-            </AccordionPanel>
-          </AccordionItem>
-        );
-      })}
-    </Accordion>
   );
 }
