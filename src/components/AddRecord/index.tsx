@@ -5,12 +5,13 @@ import {
   Input,
   SimpleGrid,
   Button,
+  Grid,
 } from "@chakra-ui/react";
 
 import type { Record } from "types";
 
 const blankForm = {
-  value: undefined,
+  value: 0,
   date: new Date().toISOString().split("T")[0],
 };
 interface AddRecordProps {
@@ -31,7 +32,10 @@ export default function AddRecord({ onSubmit }: AddRecordProps) {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <SimpleGrid gap={4} columns={[1, 2, 3]}>
+      <Grid
+        gap={[4]}
+        gridTemplateColumns={["repeat(auto-fit, minmax(120px, 1fr))"]}
+      >
         <FormControl id="value" isRequired>
           <FormLabel>Value</FormLabel>
           <Input
@@ -74,7 +78,7 @@ export default function AddRecord({ onSubmit }: AddRecordProps) {
           Add Record
         </Button>
         {/* <pre>{JSON.stringify(newRecord, null, 2)}</pre> */}
-      </SimpleGrid>
+      </Grid>
     </form>
   );
 }

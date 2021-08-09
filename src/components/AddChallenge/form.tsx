@@ -37,7 +37,7 @@ export default function AddChallenge({ onSubmit }: AddChallengeProps) {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <SimpleGrid gap={4}>
+      <SimpleGrid gap={[4]}>
         <FormControl id="name" isRequired>
           <FormLabel>Challenge name</FormLabel>
           <Input

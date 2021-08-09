@@ -14,7 +14,7 @@ export default function App() {
     <Box bgGradient="linear( base.500, accent.500)" minH="100vh">
       <Box w="inherit" h="inherit" minH="inherit" bg={bg}>
         <Header />
-        <Container maxW={["100%", null, null, "1200px"]}>
+        <Container px={[4, null, 8]} maxW={["100%", null, null]}>
           <Content />
         </Container>
       </Box>

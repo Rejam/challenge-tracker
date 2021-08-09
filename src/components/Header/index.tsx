@@ -13,10 +13,10 @@ export default function Header() {
   const auth = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box as="header" py={2} px={3}>
+    <Box as="header" py={[2, null, 4]} px={[4, null, 8]}>
       <HStack justifyContent="space-between">
         <ChakraLink as={Link} to="/">
-          Home
+          Challenge Tracker
         </ChakraLink>
         <HStack>
           <Button borderRadius={0} onClick={toggleColorMode}>

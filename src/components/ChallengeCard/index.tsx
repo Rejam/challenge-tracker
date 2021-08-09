@@ -31,8 +31,8 @@ export default function ChallengeCard({ challenge }: ChallengeCardProps) {
 
   const linkUrl = `/challenges/${challenge.id}`;
   return (
-    <Box bg={bg} shadow="md" p={4} w="100%">
-      <SimpleGrid gap={4}>
+    <Box bg={bg} shadow="md" p={[4, null, 8]} w="100%">
+      <SimpleGrid gap={[4, null, 8]}>
         <ChakraLink as={Link} to={linkUrl}>
           <Heading as="h3">{challenge.name}</Heading>
         </ChakraLink>

@@ -1,8 +1,6 @@
 import {
   Flex,
-  Stat,
-  StatLabel,
-  StatNumber,
+  Text,
   useDisclosure,
   Modal,
   ModalBody,
@@ -12,15 +10,21 @@ import {
   ModalCloseButton,
   Button,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 
-import type { Record } from "types";
+import type { ChallengeUnits, Record } from "types";
 
 interface RecordItemProps {
   record: Record;
   deleteRecord: () => Promise<void | null>;
+  unit: ChallengeUnits;
 }
-export default function RecordItem({ record, deleteRecord }: RecordItemProps) {
+export default function RecordItem({
+  record,
+  deleteRecord,
+  unit,
+}: RecordItemProps) {
   const hoverBG = useColorModeValue("base.50", "base.800");
   return (
     <Flex
@@ -28,12 +32,15 @@ export default function RecordItem({ record, deleteRecord }: RecordItemProps) {
       alignItems="center"
       _hover={{ bg: hoverBG }}
       px={2}
+      mb={1}
       borderRadius="8"
     >
-      <Stat>
-        <StatLabel>Date: {record.date}</StatLabel>
-        <StatNumber>{record.value}</StatNumber>
-      </Stat>
+      <Stack direction="row">
+        {/* <Text>{record.date}</Text> */}
+        <Text>
+          {record.value} {unit}
+        </Text>
+      </Stack>
       <DeleteRecordModal onDelete={deleteRecord} />
     </Flex>
   );
@@ -47,7 +54,14 @@ function DeleteRecordModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button w="fit-content" colorScheme="red" onClick={onOpen}>
+      <Button
+        my={2}
+        w="fit-content"
+        colorScheme="red"
+        onClick={onOpen}
+        variant="outline"
+        h={8}
+      >
         Delete Record
       </Button>
 

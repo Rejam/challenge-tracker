@@ -27,7 +27,7 @@ export default function TargetInput({ value, onChange }: TargetInputProps) {
     onChange(newTarget);
   };
   return (
-    <SimpleGrid gap={8}>
+    <SimpleGrid gap={[4]}>
       <NumberInput
         required
         value={value}

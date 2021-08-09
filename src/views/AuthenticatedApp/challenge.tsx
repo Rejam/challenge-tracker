@@ -45,11 +45,18 @@ export default function Challenge() {
   const records: Record[] = challenge.records || [];
   const currentTotal = records.reduce(getTotal, 0);
   const progressPercent = Math.round((currentTotal / challenge.target) * 100);
+  const recordsByDate = Object.entries(
+    records.reduce((grouped: { [key: string]: Record[] }, record: Record) => {
+      const key = record.date;
+      if (grouped[key]) return { ...grouped, [key]: [record, ...grouped[key]] };
+      return { ...grouped, [key]: [record] };
+    }, {})
+  );
 
   return (
     <Box mt={[4, null, 8]} p={[4, null, 8]} shadow="md" bg={bg}>
       <Heading as="h2">{challenge.name}</Heading>
-      <SimpleGrid mt={8} gap={8}>
+      <SimpleGrid mt={8} gap={[4, null, 8]}>
         <Box maxW={600} mx="auto">
           <SimpleGrid
             gap={[4, null, 8]}
@@ -72,14 +79,22 @@ export default function Challenge() {
         <Box w="100%" maxW={600} mx="auto">
           <AddRecord onSubmit={addRecord} />
         </Box>
-        <Grid gap={8}>
-          {records.map((record) => (
-            <RecordItem
-              key={record.id}
-              record={record}
-              deleteRecord={deleteRecord(record.id)}
-            />
-          ))}
+        <Grid gap={[4, null, 8]}>
+          {recordsByDate.map(([key, groupedRecords]) => {
+            return (
+              <div>
+                <h5>{key}</h5>
+                {groupedRecords.map((record: Record) => (
+                  <RecordItem
+                    key={record.id}
+                    record={record}
+                    unit={challenge.units}
+                    deleteRecord={deleteRecord(record.id)}
+                  />
+                ))}
+              </div>
+            );
+          })}
         </Grid>
       </SimpleGrid>
 
@@ -101,7 +116,7 @@ function DeleteChallengeModal({
         border="2px solid"
         borderColor="red"
         borderRadius={8}
-        p={4}
+        p={[4, null, 8]}
         textAlign="center"
       >
         <Button w="fit-content" colorScheme="red" onClick={onOpen}>
