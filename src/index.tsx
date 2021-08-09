@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import {
   ChakraProvider,
   extendTheme,
@@ -14,15 +15,20 @@ import reportWebVitals from "./reportWebVitals";
 
 const theme = extendTheme(withDefaultColorScheme({ colorScheme: "blue" }), {
   config: { useSystemColorMode: true },
-  base: ChakraTheme.colors.pink,
+  colors: {
+    base: ChakraTheme.colors.blue,
+    accent: ChakraTheme.colors.pink,
+  },
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider theme={theme}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

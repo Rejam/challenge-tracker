@@ -5,10 +5,10 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   SimpleGrid,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
+  // Slider,
+  // SliderTrack,
+  // SliderFilledTrack,
+  // SliderThumb,
 } from "@chakra-ui/react";
 
 const inputProps = {
@@ -27,7 +27,7 @@ export default function TargetInput({ value, onChange }: TargetInputProps) {
     onChange(newTarget);
   };
   return (
-    <SimpleGrid columns={2} gap={8}>
+    <SimpleGrid gap={8}>
       <NumberInput
         required
         value={value}
@@ -41,12 +41,17 @@ export default function TargetInput({ value, onChange }: TargetInputProps) {
           <NumberDecrementStepper />
         </NumberInputStepper>
       </NumberInput>
-      <Slider value={value} onChange={handleChange} {...inputProps}>
+      {/* <Slider
+        value={value}
+        onChange={handleChange}
+        color="black"
+        {...inputProps}
+      >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
         <SliderThumb fontSize="xs" boxSize="40px" children={value} />
-      </Slider>
+      </Slider> */}
     </SimpleGrid>
   );
 }
