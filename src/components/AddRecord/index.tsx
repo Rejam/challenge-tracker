@@ -1,5 +1,16 @@
 import { useState } from "react";
-import { FormControl, FormLabel, Input, Button, Grid } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Grid,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
 
 import type { Record } from "types";
 
@@ -31,18 +42,25 @@ export default function AddRecord({ onSubmit }: AddRecordProps) {
       >
         <FormControl id="value" isRequired>
           <FormLabel>Value</FormLabel>
-          <Input
+
+          <NumberInput
             required
             value={newRecord?.value}
             placeholder="Value"
-            onChange={(e) =>
+            onChange={(newValue) =>
               setNewRecord((cur) => {
-                const field = { value: parseInt(e.target.value) || 0 };
+                const field = { value: parseInt(newValue) || 0 };
                 if (cur) return { ...cur, ...field };
                 return field;
               })
             }
-          />
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
         </FormControl>
         <FormControl id="date" isRequired>
           <FormLabel>Date</FormLabel>
